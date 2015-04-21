@@ -24,38 +24,47 @@
     <!-- firebase database js client -->
     <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
   </head>
-  <body ng-app="starter" ng-controller="TodoCtrl">
+  <body ng-app="todo" ng-controller="TodoCtrl">
 
     <ion-side-menus>
 
-       <!-- Center content -->
-        <ion-side-menu-content>
-          <ion-header-bar class="bar-dark">
-            <h1 class="title">Todo</h1>
-            <!-- New Task button-->
-            <button class="button button-icon" ng-click="newTask()">
-              <i class="icon ion-compose"></i>
-            </button>
-          </ion-header-bar>
-          <ion-content>
-            <!-- our list and list items -->
-            <ion-list>
-              <ion-item ng-repeat="task in tasks">
-                {{task.title}}
-              </ion-item> 
-            </ion-list>
-          </ion-content>
-        </ion-side-menu-content>
-
+      <!-- Center content -->
+      <ion-side-menu-content>
+        <ion-header-bar class="bar-dark">
+          <button class="button button-icon" ng-click="toggleProjects()">
+            <i class="icon ion-navicon"></i>
+          </button>
+          <h1 class="title">{{activeProject.title}}</h1>
+          <!-- New Task button-->
+          <button class="button button-icon" ng-click="newTask()">
+            <i class="icon ion-compose"></i>
+          </button>
+        </ion-header-bar>
+        <ion-content scroll="false">
+          <ion-list>
+            <ion-item ng-repeat="task in activeProject.tasks">
+              {{task.title}}
+            </ion-item>
+          </ion-list>
+        </ion-content>
+      </ion-side-menu-content>
+  
       <!-- Left menu -->
       <ion-side-menu side="left">
         <ion-header-bar class="bar-dark">
           <h1 class="title">Projects</h1>
+          <button class="button button-icon ion-plus" ng-click="newProject()">
+          </button>
         </ion-header-bar>
+        <ion-content scroll="false">
+          <ion-list>
+            <ion-item ng-repeat="project in projects" ng-click="selectProject(project, $index)" ng-class="{active: activeProject == project}">
+              {{project.title}}
+            </ion-item>
+          </ion-list>
+        </ion-content>
       </ion-side-menu>
-
-    </ion-side-menus>
-
+ 
 
     <script id="new-task.html" type="text/ng-template">
 
